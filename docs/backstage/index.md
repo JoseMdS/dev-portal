@@ -61,6 +61,32 @@ yarn start \
 | Docs-fliken: `Failed to generate docs … caused by Error: spawn mkdocs ENOENT` | Backstage hittar inte `mkdocs` på `PATH`. Installera och lägg till Pythons bin-mapp, i samma terminal som `yarn start`: `pip3 install --user -r ~/dev/dev-portal/tools/requirements-docs.txt`, sedan `export PATH="$(python3 -m site --user-base)/bin:$PATH"` (på macOS med systemets Python blir det `~/Library/Python/3.9/bin`). Kontrollera med `which mkdocs` och starta om `yarn start`. Lägg `export`-raden i `~/.zshrc` så att den gäller nästa gång. |
 | Komponenterna syns inte i Catalog | `GITHUB_TOKEN` saknas eller saknar läsrätt på något av repona. Se loggen i terminalen efter `catalog`. |
 
+## Färgtema
+
+`backstage/theme/portalTheme.ts` innehåller ett ljust och ett mörkt tema i marinblått, rött och vitt. Lägg in det i appen så här:
+
+1. Kopiera filen till `~/dev/backstage/packages/app/src/theme/portalTheme.ts`.
+2. Registrera temana i `packages/app/src/App.tsx`:
+
+    ```tsx
+    import { UnifiedThemeProvider } from '@backstage/theme';
+    import { portalLightTheme, portalDarkTheme } from './theme/portalTheme';
+
+    const app = createApp({
+      // … det som redan finns
+      themes: [
+        { id: 'portal-light', title: 'Portal ljust', variant: 'light',
+          Provider: ({ children }) => <UnifiedThemeProvider theme={portalLightTheme} children={children} /> },
+        { id: 'portal-dark', title: 'Portal mörkt', variant: 'dark',
+          Provider: ({ children }) => <UnifiedThemeProvider theme={portalDarkTheme} children={children} /> },
+      ],
+    });
+    ```
+
+3. Starta om `yarn start` och välj tema under **Settings → Appearance**.
+
+Om appen använder det nya frontend-systemet (`App.tsx` importerar från `@backstage/frontend-defaults`) registreras temana i stället med `ThemeBlueprint` från `@backstage/frontend-plugin-api`.
+
 ## Drift om den ska vara uppe hela tiden
 
 | Alternativ | Vad som behövs | Kommentar |
