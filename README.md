@@ -21,6 +21,13 @@ mkdocs serve            # http://127.0.0.1:8000
 
 Ett projekts dokumentation förhandsgranskas på samma sätt i projektets repo (`mkdocs serve`).
 
+## Installera skillsen
+
+```sh
+claude plugin marketplace add JoseMdS/dev-portal
+claude plugin install levande-dokumentation@dev-portal
+```
+
 ## Nytt projekt
 
 Se [docs/nytt-projekt.md](docs/nytt-projekt.md). Kort version:

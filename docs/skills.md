@@ -12,7 +12,15 @@ Skillarna ligger centralt i dev-portal som Claude Code-pluginet **levande-dokume
 --8<-- "template/project/.claude/settings.json"
 ```
 
-Claude Code frågar första gången om du litar på marknadsplatsen `dev-portal`. Därefter finns skillarna i alla repon som har filen. Uppdateringar i dev-portal når alla repon (`/plugin marketplace update dev-portal`).
+Claude Code frågar första gången om du litar på marknadsplatsen `dev-portal`. Kommer ingen fråga, installera från terminalen (en gång per dator):
+
+```sh
+claude plugin marketplace add JoseMdS/dev-portal
+claude plugin install levande-dokumentation@dev-portal
+claude plugin list        # ska visa levande-dokumentation@dev-portal som enabled
+```
+
+Därefter finns skillarna i alla repon som har filen. Uppdateringar i dev-portal når alla repon (`/plugin marketplace update dev-portal`).
 
 | Skill | Gör | Typisk fras |
 |---|---|---|

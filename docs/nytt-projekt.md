@@ -33,4 +33,4 @@ I en PR till dev-portal:
 
 ## 4. Klart
 
-Öppna repot i Claude Code. Det frågar om pluginet, och sedan fungerar `user-story`, `lld-update`, `adr-new`, `sad-hld-draft` och `pr-trace`. Börja med att be Claude fylla i LLD utifrån koden.
+Öppna repot i Claude Code. Det frågar om pluginet (annars: `claude plugin install levande-dokumentation@dev-portal` efter `claude plugin marketplace add JoseMdS/dev-portal`), och sedan fungerar `user-story`, `lld-update`, `adr-new`, `sad-hld-draft` och `pr-trace`. Börja med att be Claude fylla i LLD utifrån koden.
