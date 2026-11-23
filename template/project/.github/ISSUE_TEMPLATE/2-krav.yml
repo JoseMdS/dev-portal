@@ -1,0 +1,25 @@
+name: Krav
+description: Ett krav som spåras till dokument och PR.
+title: "[{{PREFIX}}-KRAV-NNN] "
+labels: ["typ:krav"]
+body:
+  - type: input
+    id: epic
+    attributes:
+      label: Epic
+      placeholder: "#12"
+    validations: {required: true}
+  - type: textarea
+    id: krav
+    attributes:
+      label: Krav
+      description: Vad ska systemet göra eller uppfylla?
+    validations: {required: true}
+  - type: textarea
+    id: kalla
+    attributes:
+      label: Källa och motivering
+      description: Var kommer kravet ifrån (idé, bugg, spelets ändring …)?
+  - type: markdown
+    attributes:
+      value: Lägg kravet som sub-issue till epicen och bryt ner det i user stories.

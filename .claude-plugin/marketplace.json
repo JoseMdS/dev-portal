@@ -1,0 +1,13 @@
+{
+  "name": "dev-portal",
+  "owner": { "name": "JoseMdS" },
+  "metadata": { "description": "Claude Code-plugins för levande dokumentation i Josés projekt" },
+  "plugins": [
+    {
+      "name": "levande-dokumentation",
+      "source": "./plugins/levande-dokumentation",
+      "description": "Skills för krav, user stories, LLD, ADR, SAD/HLD och spårbarhet i PR:er",
+      "version": "1.0.0"
+    }
+  ]
+}

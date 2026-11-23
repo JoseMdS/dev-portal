@@ -1,0 +1,64 @@
+site_name: Dev-portal
+site_description: Levande dokumentation för Josés projekt
+repo_url: https://github.com/JoseMdS/dev-portal
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: sv
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle: {icon: material/brightness-7, name: Mörkt läge}
+    - scheme: slate
+      toggle: {icon: material/brightness-4, name: Ljust läge}
+
+plugins:
+  - search:
+      lang: sv
+
+markdown_extensions:
+  - meta
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Start: index.md
+  - Arbetssätt:
+      - arbetssatt/index.md
+      - Spårbarhet: arbetssatt/sparbarhet.md
+      - Från idé till release: arbetssatt/flode.md
+      - ID-schema och etiketter: arbetssatt/id-schema.md
+      - Hur mycket ska dokumenteras: arbetssatt/dokumentniva.md
+      - DoR och DoD: arbetssatt/dor-dod.md
+  - Mallar:
+      - mallar/index.md
+      - LLD: mallar/lld.md
+      - ADR: mallar/adr.md
+      - HLD: mallar/hld.md
+      - SAD: mallar/sad.md
+      - Krav och user story: mallar/krav-story.md
+  - Projekt: projekt/index.md
+  - Ordlista: ordlista.md
+  - Backstage: backstage/index.md
+  - Claude-skills: skills.md
+  - Nytt projekt: nytt-projekt.md

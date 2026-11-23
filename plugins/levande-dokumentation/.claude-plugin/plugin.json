@@ -1,0 +1,7 @@
+{
+  "name": "levande-dokumentation",
+  "version": "1.0.0",
+  "description": "Skills för krav, user stories, LLD, ADR, SAD/HLD och spårbarhet enligt dev-portal",
+  "author": { "name": "JoseMdS" },
+  "homepage": "https://github.com/JoseMdS/dev-portal"
+}

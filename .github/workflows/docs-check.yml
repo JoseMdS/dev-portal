@@ -1,0 +1,47 @@
+# Gemensam dokumentationskontroll. Projektrepona anropar den så här:
+#   jobs:
+#     docs:
+#       uses: JoseMdS/dev-portal/.github/workflows/docs-check.yml@main
+name: docs-check
+on:
+  workflow_call:
+    inputs:
+      docs-dir:
+        description: Katalog med dokumentationen
+        type: string
+        default: docs
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hämta verktygen från dev-portal
+        uses: actions/checkout@v4
+        with:
+          repository: JoseMdS/dev-portal
+          path: .dev-portal
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r .dev-portal/tools/requirements-docs.txt
+      - name: mkdocs build --strict
+        run: mkdocs build --strict -d "$RUNNER_TEMP/site"
+      - name: Metadata och ID:n
+        run: python .dev-portal/tools/check_docs.py "${{ inputs.docs-dir || 'docs' }}"
+      - name: Spårbarhet (pr-trace)
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          export PR_FILES="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename')"
+          python .dev-portal/tools/pr_trace.py

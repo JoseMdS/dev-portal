@@ -1,0 +1,9 @@
+name: docs
+on:
+  pull_request:
+  push:
+    branches: [{{GREN}}]
+jobs:
+  docs:
+    # Gemensam kontroll från dev-portal: mkdocs build --strict, metadata och spårbarhet.
+    uses: JoseMdS/dev-portal/.github/workflows/docs-check.yml@main

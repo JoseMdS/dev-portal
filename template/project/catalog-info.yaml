@@ -1,0 +1,20 @@
+# Registreras i Backstage via dev-portal/catalog/all.yaml.
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: {{KOMPONENT}}
+  title: "{{PROJEKT}}"
+  description: "{{BESKRIVNING}}"
+  annotations:
+    github.com/project-slug: JoseMdS/{{REPO}}
+    backstage.io/techdocs-ref: dir:.
+  tags: [{{TAGGAR}}]
+  links:
+    - url: https://github.com/JoseMdS/{{REPO}}/issues
+      title: Krav och user stories
+      icon: docs
+spec:
+  type: {{TYP}}
+  lifecycle: production
+  owner: user:josemds
+  system: {{SYSTEM}}

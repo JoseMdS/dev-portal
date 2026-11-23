@@ -1,0 +1,60 @@
+# Bygger dev-portal och de projekt som har publish: true i projects.yml, och publicerar på GitHub Pages.
+name: pages
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "15 4 * * *"   # varje natt, så att projektens docs kommer med utan att dev-portal ändras
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r tools/requirements-docs.txt
+      - name: Hämta projektens dokumentation
+        env:
+          READ_TOKEN: ${{ secrets.PORTAL_READ_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os, subprocess, yaml
+          token = os.environ.get("READ_TOKEN", "")
+          for p in yaml.safe_load(open("projects.yml"))["projects"]:
+              if not p.get("publish"):
+                  continue
+              if p.get("private") and not token:
+                  print(f"::warning::{p['name']} är privat och PORTAL_READ_TOKEN saknas, hoppar över")
+                  continue
+              auth = f"x-access-token:{token}@" if p.get("private") else ""
+              url = f"https://{auth}github.com/{p['repo']}.git"
+              r = subprocess.run(["git", "clone", "-q", "--depth", "1", "-b", p["branch"], url, f"projects/{p['slug']}"])
+              if r.returncode:
+                  print(f"::warning::kunde inte hämta {p['repo']}@{p['branch']}")
+          PY
+      - run: python tools/build_site.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
