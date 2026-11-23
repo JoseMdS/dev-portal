@@ -63,29 +63,45 @@ yarn start \
 
 ## Färgtema
 
-`backstage/theme/portalTheme.ts` innehåller ett ljust och ett mörkt tema i marinblått, rött och vitt. Lägg in det i appen så här:
+`backstage/theme/portalTheme.ts` innehåller ett ljust och ett mörkt tema i marinblått, rött och vitt. En app som skapats med `npx @backstage/create-app` använder det nya frontend-systemet, och där läggs temat in som en modul:
 
-1. Kopiera filen till `~/dev/backstage/packages/app/src/theme/portalTheme.ts`.
-2. Registrera temana i `packages/app/src/App.tsx`:
+1. Kopiera filen till `~/dev/backstage/packages/app/src/theme/portalTheme.ts` och kör `yarn --cwd packages/app add @backstage/theme`.
+2. Skapa `packages/app/src/modules/theme/index.tsx`:
 
     ```tsx
+    import { createFrontendModule } from '@backstage/frontend-plugin-api';
+    import { ThemeBlueprint } from '@backstage/plugin-app-react';
     import { UnifiedThemeProvider } from '@backstage/theme';
-    import { portalLightTheme, portalDarkTheme } from './theme/portalTheme';
+    import { portalLightTheme, portalDarkTheme } from '../../theme/portalTheme';
 
-    const app = createApp({
-      // … det som redan finns
-      themes: [
-        { id: 'portal-light', title: 'Portal ljust', variant: 'light',
-          Provider: ({ children }) => <UnifiedThemeProvider theme={portalLightTheme} children={children} /> },
-        { id: 'portal-dark', title: 'Portal mörkt', variant: 'dark',
-          Provider: ({ children }) => <UnifiedThemeProvider theme={portalDarkTheme} children={children} /> },
-      ],
+    const portalLight = ThemeBlueprint.make({
+      name: 'portal-light',
+      params: { theme: { id: 'portal-light', title: 'Portal ljust', variant: 'light',
+        Provider: ({ children }) => <UnifiedThemeProvider theme={portalLightTheme} children={children} /> } },
+    });
+    const portalDark = ThemeBlueprint.make({
+      name: 'portal-dark',
+      params: { theme: { id: 'portal-dark', title: 'Portal mörkt', variant: 'dark',
+        Provider: ({ children }) => <UnifiedThemeProvider theme={portalDarkTheme} children={children} /> } },
+    });
+
+    export const themeModule = createFrontendModule({
+      pluginId: 'app',
+      extensions: [portalLight, portalDark],
     });
     ```
 
-3. Starta om `yarn start` och välj tema under **Settings → Appearance**.
+3. Lägg till `themeModule` i `features` i `packages/app/src/App.tsx`.
+4. Lägg temana först i `app-config.yaml`, annars ligger Backstages gröna standardtema kvar som förval:
 
-Om appen använder det nya frontend-systemet (`App.tsx` importerar från `@backstage/frontend-defaults`) registreras temana i stället med `ThemeBlueprint` från `@backstage/frontend-plugin-api`.
+    ```yaml
+    app:
+      extensions:
+        - theme:app/portal-light
+        - theme:app/portal-dark
+    ```
+
+5. Kör `yarn tsc` och starta om `yarn start`. Standardtemana finns kvar under **Settings → Appearance**.
 
 ## Drift om den ska vara uppe hela tiden
 
