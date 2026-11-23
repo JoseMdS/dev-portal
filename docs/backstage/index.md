@@ -58,7 +58,7 @@ yarn start \
 | `npm ERR! EACCES` eller fel om rättigheter i `~/.npm` när `npx` körs | Gammal npm-cache som ägs av root: `sudo chown -R $(id -u):$(id -g) ~/.npm`, kör sedan `npx` igen. |
 | `yarn: command not found` eller fel Yarn-version | Kör `corepack enable` (följer med Node) och öppna en ny terminal. |
 | Fel om Node-version eller native-moduler (t.ex. `isolated-vm`, `better-sqlite3`) | Byt till Node 22 eller 24 LTS (t.ex. `nvm install 22 && nvm use 22`), ta bort `node_modules` och kör `yarn install`. |
-| Docs-fliken säger att `mkdocs` saknas | Installera `requirements-docs.txt` i samma Python som finns på `PATH` i terminalen där `yarn start` körs. |
+| Docs-fliken: `Failed to generate docs … caused by Error: spawn mkdocs ENOENT` | Backstage hittar inte `mkdocs` på `PATH`. Installera och lägg till Pythons bin-mapp, i samma terminal som `yarn start`: `pip3 install --user -r ~/dev/dev-portal/tools/requirements-docs.txt`, sedan `export PATH="$(python3 -m site --user-base)/bin:$PATH"` (på macOS med systemets Python blir det `~/Library/Python/3.9/bin`). Kontrollera med `which mkdocs` och starta om `yarn start`. Lägg `export`-raden i `~/.zshrc` så att den gäller nästa gång. |
 | Komponenterna syns inte i Catalog | `GITHUB_TOKEN` saknas eller saknar läsrätt på något av repona. Se loggen i terminalen efter `catalog`. |
 
 ## Drift om den ska vara uppe hela tiden
