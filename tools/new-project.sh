@@ -6,7 +6,10 @@ dest="$1"; prefix="$2"; name="$3"; system="$4"; branch="${5:-main}"; type="${6:-
 [ -d "$dest" ] && [ -n "$prefix" ] && [ -n "$name" ] && [ -n "$system" ] || {
   echo "användning: $0 <repo-katalog> <PREFIX> \"<Projektnamn>\" <backstage-system> [gren] [typ]"; exit 1; }
 tpl="$(cd "$(dirname "$0")/../template/project" && pwd)"
-repo="$(basename "$(cd "$dest" && git rev-parse --show-toplevel 2>/dev/null || pwd)")"
+dest="$(cd "$dest" && pwd)"
+# Reponamnet tas från origin (rätt versaler), annars från katalognamnet.
+repo="$(git -C "$dest" remote get-url origin 2>/dev/null | sed -e 's|.*/||' -e 's|\.git$||')"
+[ -n "$repo" ] || repo="$(basename "$dest")"
 component="$(echo "$repo" | tr '[:upper:]' '[:lower:]')"
 today="$(date +%Y-%m-%d)"
 fill() {
