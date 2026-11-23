@@ -1,0 +1,37 @@
+# Projektrepon som dev-portal känner till.
+# publish: true = projektets docs/ byggs in på GitHub Pages under /projekt/<slug>/.
+# dev-portal är publikt, så Pages-sajten är publik. Privata repon publiceras bara om du
+# sätter publish: true OCH lägger in en läs-token som secret PORTAL_READ_TOKEN.
+projects:
+  - slug: raidmanagement
+    name: RaidManagement
+    repo: JoseMdS/RaidManagement
+    branch: main
+    prefix: RM
+    system: raidmanagement
+    private: true
+    publish: false
+  - slug: mangos-ui
+    name: Mangos UI (cmangos-cms)
+    repo: JoseMdS/cmangos-cms
+    branch: server-switch
+    prefix: MUI
+    system: mangos-ui
+    private: true
+    publish: false
+  - slug: altvault
+    name: AltVault
+    repo: JoseMdS/altvault
+    branch: main
+    prefix: AV
+    system: forever-addons
+    private: false
+    publish: true
+  - slug: levelcoach
+    name: LevelCoach
+    repo: JoseMdS/LevelCoach
+    branch: main
+    prefix: LC
+    system: forever-addons
+    private: false
+    publish: true

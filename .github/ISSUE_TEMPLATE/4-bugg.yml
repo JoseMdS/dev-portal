@@ -1,0 +1,21 @@
+name: Bugg
+description: Något som inte fungerar som det ska.
+labels: ["typ:bugg"]
+body:
+  - type: textarea
+    id: vad
+    attributes:
+      label: Vad händer?
+    validations: {required: true}
+  - type: textarea
+    id: forvantat
+    attributes:
+      label: Vad borde hända?
+  - type: textarea
+    id: steg
+    attributes:
+      label: Hur återskapas det?
+  - type: input
+    id: version
+    attributes:
+      label: Version / klient / server

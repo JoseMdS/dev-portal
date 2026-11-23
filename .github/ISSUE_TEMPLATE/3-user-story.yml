@@ -1,0 +1,33 @@
+name: User story
+description: En story med acceptanskriterier under ett krav.
+title: "[DP-US-NNN] Som … vill jag …"
+labels: ["typ:story"]
+body:
+  - type: input
+    id: krav
+    attributes:
+      label: Krav
+      placeholder: "#34 (DP-KRAV-008)"
+    validations: {required: true}
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      value: "Som … vill jag … så att …"
+    validations: {required: true}
+  - type: textarea
+    id: ac
+    attributes:
+      label: Acceptanskriterier
+      value: |
+        - [ ] 
+        - [ ] 
+    validations: {required: true}
+  - type: textarea
+    id: dod
+    attributes:
+      label: Definition of Done
+      value: |
+        - [ ] Acceptanskriterierna uppfyllda
+        - [ ] LLD uppdaterad om designen ändrats
+        - [ ] PR länkar hit med Closes #nr

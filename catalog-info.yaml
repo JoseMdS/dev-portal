@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dev-portal
+  title: Dev-portal
+  description: Arbetssätt, mallar, ordlista, Backstage-katalog och Claude-skills
+  annotations:
+    github.com/project-slug: JoseMdS/dev-portal
+    backstage.io/techdocs-ref: dir:.
+  tags: [mkdocs, backstage, dokumentation]
+spec:
+  type: documentation
+  lifecycle: production
+  owner: user:josemds
+  system: dev-portal

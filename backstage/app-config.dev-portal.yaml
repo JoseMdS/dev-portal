@@ -1,0 +1,28 @@
+# Lägg till i en Backstage-app (npx @backstage/create-app) som extra config:
+#   yarn start --config ../../app-config.yaml --config /sökväg/till/dev-portal/backstage/app-config.dev-portal.yaml
+# Kräver miljövariabeln GITHUB_TOKEN (fine-grained token med läsrätt Contents + Metadata
+# på dev-portal, RaidManagement, cmangos-cms, altvault och LevelCoach).
+app:
+  title: Josés dev-portal
+
+organization:
+  name: JoseMdS
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+catalog:
+  rules:
+    - allow: [Component, System, Domain, API, Resource, Location, User, Group]
+  locations:
+    - type: url
+      target: https://github.com/JoseMdS/dev-portal/blob/main/catalog/all.yaml
+
+techdocs:
+  builder: local          # Backstage bygger dokumenten själv från repot (techdocs-ref: dir:.)
+  generator:
+    runIn: local          # kräver mkdocs + mkdocs-techdocs-core installerat (tools/requirements-docs.txt)
+  publisher:
+    type: local

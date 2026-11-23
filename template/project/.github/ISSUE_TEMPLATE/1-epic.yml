@@ -1,0 +1,19 @@
+name: Epic
+description: Ett större mål som samlar flera krav.
+title: "[{{PREFIX}}-EPIC-NN] "
+labels: ["typ:epic"]
+body:
+  - type: textarea
+    id: mal
+    attributes:
+      label: Mål
+      description: Vad ska bli möjligt, och för vem?
+    validations: {required: true}
+  - type: textarea
+    id: avgransning
+    attributes:
+      label: Avgränsning
+      description: Vad ingår inte?
+  - type: markdown
+    attributes:
+      value: Koppla kraven som sub-issues när de är skapade.

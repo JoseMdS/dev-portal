@@ -1,0 +1,27 @@
+site_name: "{{PROJEKT}}"
+site_description: "{{BESKRIVNING}}"
+repo_url: https://github.com/JoseMdS/{{REPO}}
+edit_uri: edit/{{GREN}}/docs/
+
+# techdocs-core ger samma bygge i Backstage TechDocs och på GitHub Pages (tema: Material).
+plugins:
+  - techdocs-core
+
+markdown_extensions:
+  - meta
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Start: index.md
+  - LLD: lld.md
+  - Beslut (ADR):
+      - adr/index.md
+      - ADR-0001 Levande dokumentation: adr/0001-levande-dokumentation.md
+  - Krav: krav.md
+  - HLD: hld.md
+  - SAD: sad.md
+  - Ordlista: ordlista.md

@@ -1,0 +1,15 @@
+# Startpunkt för Backstage-katalogen. Peka app-config på denna fil.
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: dev-portal-katalog
+  description: Alla system och komponenter i Josés projekt
+spec:
+  targets:
+    - ./org.yaml
+    - ./systems.yaml
+    - https://github.com/JoseMdS/dev-portal/blob/main/catalog-info.yaml
+    - https://github.com/JoseMdS/RaidManagement/blob/main/catalog-info.yaml
+    - https://github.com/JoseMdS/cmangos-cms/blob/server-switch/catalog-info.yaml
+    - https://github.com/JoseMdS/altvault/blob/main/catalog-info.yaml
+    - https://github.com/JoseMdS/LevelCoach/blob/main/catalog-info.yaml

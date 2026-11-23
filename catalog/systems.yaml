@@ -1,0 +1,57 @@
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: wow-verktyg
+  title: WoW-verktyg
+  description: Addons och webbverktyg för World of Warcraft-servrar (cmangos och WoW Forever)
+spec:
+  owner: user:josemds
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: utvecklarstod
+  title: Utvecklarstöd
+  description: Portal, mallar och arbetssätt för alla projekt
+spec:
+  owner: user:josemds
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: raidmanagement
+  title: RaidManagement
+  description: Raid management-addon för cmangos med playerbots (Classic, TBC, WotLK)
+spec:
+  owner: user:josemds
+  domain: wow-verktyg
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: mangos-ui
+  title: Mangos UI
+  description: Webbsajt för cmangos-servrar (konton, karaktärer, armory, världskarta)
+spec:
+  owner: user:josemds
+  domain: wow-verktyg
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: forever-addons
+  title: Forever AddOns
+  description: Addons för WoW Forever (AltVault, LevelCoach)
+spec:
+  owner: user:josemds
+  domain: wow-verktyg
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: dev-portal
+  title: Dev-portal
+  description: Levande dokumentation, Backstage-katalog och Claude-skills
+spec:
+  owner: user:josemds
+  domain: utvecklarstod

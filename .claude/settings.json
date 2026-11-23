@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "dev-portal": {
+      "source": {
+        "source": "github",
+        "repo": "JoseMdS/dev-portal"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "levande-dokumentation@dev-portal": true
+  }
+}
