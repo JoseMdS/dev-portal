@@ -26,17 +26,40 @@ flowchart TB
 
 ## Köra lokalt (rekommenderat att börja med)
 
-Backstage är en Node-app. Själva appen ligger inte i det här repot, eftersom den är stor och uppgraderas ofta. Den skapas en gång och pekas hit.
+Backstage är en Node-app. Själva appen ligger **inte** i det här repot, eftersom den är stor och uppgraderas ofta. Den skapas en gång **bredvid** dev-portal (inte i `dev-portal/backstage/`, där bara konfigurationen ligger) och pekas hit.
+
+**Förutsättningar**
+
+- Node 22 eller 24 (LTS), kontrollera med `node -v`. Udda versioner stöds inte.
+- Yarn via corepack: `corepack enable`. Installera inte Yarn globalt med npm.
+- Python 3 med MkDocs för TechDocs: `pip3 install -r dev-portal/tools/requirements-docs.txt`.
+- En fine-grained GitHub-token med **Contents: Read-only** på dev-portal, RaidManagement, cmangos-cms, altvault och LevelCoach.
 
 ```sh
-# Krav: Node 20 eller 22, Yarn, Python 3
-npx @backstage/create-app@latest      # namn t.ex. backstage
+cd ~/dev                                   # samma nivå som dev-portal
+npx @backstage/create-app@latest           # namn: backstage  → ~/dev/backstage
 cd backstage
-pip install -r ../dev-portal/tools/requirements-docs.txt
-export GITHUB_TOKEN=<fine-grained token, läsrätt på de fem repona>
-yarn start --config app-config.yaml --config ../dev-portal/backstage/app-config.dev-portal.yaml
-# öppna http://localhost:3000
+export GITHUB_TOKEN=<token>
+yarn start \
+  --config "$PWD/app-config.yaml" \
+  --config "$HOME/dev/dev-portal/backstage/app-config.dev-portal.yaml"
+# öppna http://localhost:3000 → Catalog → t.ex. raidmanagement → fliken Docs
 ```
+
+!!! warning "Använd absoluta sökvägar till --config"
+    `yarn start` kör backend i `packages/backend`, så relativa sökvägar som `app-config.yaml` eller `../dev-portal/…` letas upp därifrån och hittas inte ("Config file … does not exist").
+
+**Vanliga fel**
+
+| Fel | Orsak och åtgärd |
+|---|---|
+| `Couldn't find a package.json file in ".../dev-portal/backstage"` | `yarn` kördes i dev-portals konfigurationsmapp. Gå till appen: `cd ~/dev/backstage`. |
+| `Config file ".../packages/backend/app-config.yaml" does not exist` | Relativ sökväg till `--config`. Använd absoluta sökvägar som ovan. |
+| `npm ERR! EACCES` eller fel om rättigheter i `~/.npm` när `npx` körs | Gammal npm-cache som ägs av root: `sudo chown -R $(id -u):$(id -g) ~/.npm`, kör sedan `npx` igen. |
+| `yarn: command not found` eller fel Yarn-version | Kör `corepack enable` (följer med Node) och öppna en ny terminal. |
+| Fel om Node-version eller native-moduler (t.ex. `isolated-vm`, `better-sqlite3`) | Byt till Node 22 eller 24 LTS (t.ex. `nvm install 22 && nvm use 22`), ta bort `node_modules` och kör `yarn install`. |
+| Docs-fliken säger att `mkdocs` saknas | Installera `requirements-docs.txt` i samma Python som finns på `PATH` i terminalen där `yarn start` körs. |
+| Komponenterna syns inte i Catalog | `GITHUB_TOKEN` saknas eller saknar läsrätt på något av repona. Se loggen i terminalen efter `catalog`. |
 
 ## Drift om den ska vara uppe hela tiden
 

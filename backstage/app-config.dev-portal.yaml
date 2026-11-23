@@ -1,5 +1,7 @@
-# Lägg till i en Backstage-app (npx @backstage/create-app) som extra config:
-#   yarn start --config ../../app-config.yaml --config /sökväg/till/dev-portal/backstage/app-config.dev-portal.yaml
+# Lägg till i en Backstage-app (npx @backstage/create-app, skapad i ~/dev/backstage) som extra config.
+# Använd ABSOLUTA sökvägar, eftersom backend körs från packages/backend:
+#   cd ~/dev/backstage
+#   yarn start --config "$PWD/app-config.yaml" --config "$HOME/dev/dev-portal/backstage/app-config.dev-portal.yaml"
 # Kräver miljövariabeln GITHUB_TOKEN (fine-grained token med läsrätt Contents + Metadata
 # på dev-portal, RaidManagement, cmangos-cms, altvault och LevelCoach).
 app:
