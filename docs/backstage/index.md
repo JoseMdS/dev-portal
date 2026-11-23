@@ -58,8 +58,8 @@ yarn start \
 | `npm ERR! EACCES` eller fel om rättigheter i `~/.npm` när `npx` körs | Gammal npm-cache som ägs av root: `sudo chown -R $(id -u):$(id -g) ~/.npm`, kör sedan `npx` igen. |
 | `yarn: command not found` eller fel Yarn-version | Kör `corepack enable` (följer med Node) och öppna en ny terminal. |
 | Fel om Node-version eller native-moduler (t.ex. `isolated-vm`, `better-sqlite3`) | Byt till Node 22 eller 24 LTS (t.ex. `nvm install 22 && nvm use 22`), ta bort `node_modules` och kör `yarn install`. |
-| Docs-fliken: `Failed to generate docs … caused by Error: spawn mkdocs ENOENT` | Backstage hittar inte `mkdocs` på `PATH`. Installera och lägg till Pythons bin-mapp, i samma terminal som `yarn start`: `pip3 install --user -r ~/dev/dev-portal/tools/requirements-docs.txt`, sedan `export PATH="$(python3 -m site --user-base)/bin:$PATH"` (på macOS med systemets Python blir det `~/Library/Python/3.9/bin`). Kontrollera med `which mkdocs` och starta om `yarn start`. Lägg `export`-raden i `~/.zshrc` så att den gäller nästa gång. |
-| Komponenterna syns inte i Catalog | `GITHUB_TOKEN` saknas eller saknar läsrätt på något av repona. Se loggen i terminalen efter `catalog`. |
+| Docs-fliken: `Failed to generate docs … caused by Error: spawn mkdocs ENOENT`, eller Safari visar "Load failed" och backend har stängts | Backstage hittar inte `mkdocs` på `PATH`. Kräver Python 3.10 eller senare. macOS-systemets Python 3.9 räcker inte, eftersom `mkdocs-techdocs-core` kräver en `pymdown-extensions` som saknas för 3.9. Kör `brew install python@3.12`, sedan `python3.12 -m venv ~/dev/backstage/.venv-techdocs` och `~/dev/backstage/.venv-techdocs/bin/pip install -r ~/dev/dev-portal/tools/requirements-docs.txt`. Starta med `PATH="$HOME/dev/backstage/.venv-techdocs/bin:$PATH" yarn start …`. |
+| Komponenterna syns inte i Catalog, loggen säger `Unable to read url, no matching files found for …RaidManagement…` | `GITHUB_TOKEN` saknas i terminalen eller saknar läsrätt på de privata repona. Då faller hela katalogen bort, även de publika komponenterna. Exportera token och starta om. |
 
 ## Färgtema
 
