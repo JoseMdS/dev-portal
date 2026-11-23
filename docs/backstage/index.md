@@ -60,6 +60,7 @@ yarn start \
 | Fel om Node-version eller native-moduler (t.ex. `isolated-vm`, `better-sqlite3`) | Byt till Node 22 eller 24 LTS (t.ex. `nvm install 22 && nvm use 22`), ta bort `node_modules` och kör `yarn install`. |
 | Docs-fliken: `Failed to generate docs … caused by Error: spawn mkdocs ENOENT`, eller Safari visar "Load failed" och backend har stängts | Backstage hittar inte `mkdocs` på `PATH`. Kräver Python 3.10 eller senare. macOS-systemets Python 3.9 räcker inte, eftersom `mkdocs-techdocs-core` kräver en `pymdown-extensions` som saknas för 3.9. Kör `brew install python@3.12`, sedan `python3.12 -m venv ~/dev/backstage/.venv-techdocs` och `~/dev/backstage/.venv-techdocs/bin/pip install -r ~/dev/dev-portal/tools/requirements-docs.txt`. Starta med `PATH="$HOME/dev/backstage/.venv-techdocs/bin:$PATH" yarn start …`. |
 | Komponenterna syns inte i Catalog, loggen säger `Unable to read url, no matching files found for …RaidManagement…` | `GITHUB_TOKEN` saknas i terminalen eller saknar läsrätt på de privata repona. Då faller hela katalogen bort, även de publika komponenterna. Exportera token och starta om. |
+| Docs-fliken för RaidManagement eller cmangos-cms: Safari visar `TypeError: Load failed`, loggen säger `403 Forbidden … /commits/main/status` | `GITHUB_TOKEN` är en finkornig token som saknar **Commit statuses: Read** på de privata repona. Lägg till behörigheten, eller starta med `export GITHUB_TOKEN="$(gh auth token)"`. Publika repon påverkas inte. |
 
 ## Färgtema
 
